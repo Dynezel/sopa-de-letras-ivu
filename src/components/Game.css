@@ -238,9 +238,10 @@
 /* ── Grid area ───────────────────────────────────────────────────────────── */
 
 .game-grid-wrap {
-  /* Padding lateral pequeño para que la grilla ocupe casi todo el ancho */
-  padding: 6px 6px;
+  /* Sin padding lateral — la grilla ocupa todo el ancho */
+  padding: 4px 0;
   position: relative;
+  width: 100%;
 }
 
 .game-grid-blur {
@@ -285,10 +286,17 @@
 .game-grid {
   display: grid;
   gap: 2px;
-  /* Crítico: bloquea scroll del browser solo mientras se arrastra en la grilla */
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+
+  /*
+   * Clave: cada celda mide exactamente 1/GRID_SIZE del ancho disponible.
+   * --cols se inyecta desde el JSX como style={{ '--cols': GRID_SIZE }}
+   * El ancho es 100vw, y cada celda es cuadrada gracias a aspect-ratio en .cell
+   */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .game-grid-loading {

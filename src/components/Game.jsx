@@ -186,7 +186,11 @@ export function Game({ myGroup, onLeaveGroup }) {
         {gridData ? (
           <div
             className="game-grid"
-            style={{ gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)` }}
+            style={{
+              // Cada columna = (100vw - gap*(N-1)) / N
+              // gap=2px, N=GRID_SIZE → nunca se sale de pantalla
+              gridTemplateColumns: `repeat(${GRID_SIZE}, calc((100vw - ${(GRID_SIZE - 1) * 2}px) / ${GRID_SIZE}))`,
+            }}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}

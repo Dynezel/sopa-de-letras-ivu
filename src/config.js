@@ -60,6 +60,6 @@ export const GROUPS = [
 ];
 
 // ── Ajustes generales ─────────────────────────────────────────────────────────
-// Grilla de 20×20 para que entren palabras largas como CECILIAGRIERSON (15 letras)
-export const GRID_SIZE = 20;
+// Grilla de 19×19 para que entren palabras largas como CECILIAGRIERSON (15 letras)
+export const GRID_SIZE = 19;
 export const ADMIN_PASSWORD = "admin123";
