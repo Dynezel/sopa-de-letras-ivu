@@ -5,12 +5,7 @@
   background: #080808;
   color: #e0e0e0;
   font-family: "Courier New", monospace;
-
-  /* Bloquea el scroll de la página mientras el dedo arrastra en la grilla */
-  touch-action: none;
   overflow-x: hidden;
-
-  /* Scroll suave en iOS */
   -webkit-overflow-scrolling: touch;
 }
 
@@ -290,6 +285,10 @@
 .game-grid {
   display: grid;
   gap: 2px;
+  /* Crítico: bloquea scroll del browser solo mientras se arrastra en la grilla */
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .game-grid-loading {

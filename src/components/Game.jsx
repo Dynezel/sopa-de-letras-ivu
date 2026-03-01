@@ -26,7 +26,7 @@ export function Game({ myGroup, onLeaveGroup }) {
   const [pwError, setPwError]       = useState(false);
 
   // Lógica de selección de celdas
-  const { selectedSet, handleStart, handleEnter, handleEnd } = useGridSelection({
+  const { selectedSet, handlePointerDown, handlePointerMove, handlePointerUp } = useGridSelection({
     started,
     onSelectionEnd: checkSelection,
   });
@@ -66,11 +66,7 @@ export function Game({ myGroup, onLeaveGroup }) {
   };
 
   return (
-    <div
-      className="game"
-      onPointerUp={handleEnd}
-      onPointerLeave={handleEnd}
-    >
+    <div className="game">
       {/* ── Header ── */}
       <header className="game-header">
         <div className="game-header__left">
@@ -191,16 +187,21 @@ export function Game({ myGroup, onLeaveGroup }) {
           <div
             className="game-grid"
             style={{ gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)` }}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerLeave={handlePointerUp}
+            onPointerCancel={handlePointerUp}
           >
             {gridData.grid.map((row, r) =>
               row.map((cell, c) => (
                 <Cell
                   key={`${r}-${c}`}
                   data={cell}
+                  row={r}
+                  col={c}
                   isSelected={selectedSet.has(`${r},${c}`)}
                   foundColor={foundCellColors[`${r},${c}`] || null}
-                  onStart={() => handleStart(r, c)}
-                  onEnter={() => handleEnter(r, c)}
                 />
               ))
             )}
