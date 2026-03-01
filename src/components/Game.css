@@ -371,7 +371,7 @@
 
 .game-words__title {
   font-size: clamp(9px, 2.2vw, 11px);
-  color: var(--text-muted);
+  color: white;
   letter-spacing: 3px;
   margin-bottom: 12px;
   text-transform: uppercase;
@@ -405,7 +405,7 @@
 
 .game-words__legend span {
   font-size: clamp(9px, 2.2vw, 11px);
-  color: var(--text-muted);
+  color: rgb(255, 0, 0);
   letter-spacing: 1px;
 }
 

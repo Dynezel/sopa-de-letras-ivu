@@ -180,7 +180,6 @@ export function Game({ myGroup, onLeaveGroup }) {
             </div>
             <div className="game-words__legend">
               <span>⚡ = encontraste primero</span>
-              <span>emoji = quién llegó primero</span>
             </div>
           </div>
 
