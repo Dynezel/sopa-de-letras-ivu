@@ -1,0 +1,463 @@
+/* ── Game (pantalla principal) ───────────────────────────────────────────── */
+
+.game {
+  min-height: 100dvh;
+  background: #080808;
+  color: #e0e0e0;
+  font-family: "Courier New", monospace;
+
+  /* Bloquea el scroll de la página mientras el dedo arrastra en la grilla */
+  touch-action: none;
+  overflow-x: hidden;
+
+  /* Scroll suave en iOS */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+
+.game-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #080808;
+  border-bottom: 1px solid #111;
+
+  /* Padding extra arriba para la safe-area del notch en iPhone */
+  padding: env(safe-area-inset-top, 10px) 14px 10px;
+  padding-top: max(env(safe-area-inset-top), 10px);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 56px;
+}
+
+.game-header__left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0; /* evita overflow */
+}
+
+.game-header__group-badge {
+  border-radius: 20px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.game-header__group-emoji {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.game-header__group-name {
+  font-size: clamp(11px, 2.8vw, 13px);
+  letter-spacing: 2px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.game-header__change-btn {
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+
+  /* Área táctil mínima 44px */
+  font-size: clamp(10px, 2.5vw, 12px);
+  letter-spacing: 1px;
+  padding: 8px 4px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+
+  font-family: "Courier New", monospace;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.game-header__right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.game-header__waiting {
+  font-size: clamp(9px, 2vw, 10px);
+  color: #f44336;
+  letter-spacing: 2px;
+  padding: 4px 8px;
+  border: 1px solid #f4433622;
+  border-radius: 4px;
+  animation: pulse 1.5s infinite;
+  white-space: nowrap;
+}
+
+.game-header__admin-btn {
+  background: #0f0f0f;
+  border: 1px solid #1a1a1a;
+  color: #555;
+  border-radius: 8px;
+
+  /* Botón fácil de tocar: mínimo 44×44px */
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── Stats bar ───────────────────────────────────────────────────────────── */
+
+.game-stats {
+  padding: 10px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.game-stats__progress {
+  flex: 1;
+}
+
+.game-stats__progress-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.game-stats__progress-label {
+  font-size: clamp(9px, 2.2vw, 11px);
+  color: #444;
+  letter-spacing: 2px;
+}
+
+.game-stats__progress-count {
+  font-size: clamp(9px, 2.2vw, 11px);
+  font-weight: bold;
+}
+
+.game-stats__progress-track {
+  background: #111;
+  border-radius: 3px;
+  height: 5px;
+  overflow: hidden;
+}
+
+.game-stats__progress-fill {
+  height: 100%;
+  transition: width 0.5s;
+  border-radius: 3px;
+}
+
+.game-stats__firsts {
+  border-radius: 10px;
+  padding: 6px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 58px;
+}
+
+.game-stats__firsts-label {
+  font-size: clamp(9px, 2vw, 10px);
+  color: #444;
+  letter-spacing: 1px;
+}
+
+.game-stats__firsts-count {
+  font-size: clamp(18px, 4.5vw, 22px);
+  font-weight: bold;
+  line-height: 1.1;
+}
+
+/* ── Completed banner ────────────────────────────────────────────────────── */
+
+.game-completed {
+  margin: 8px 14px;
+  padding: 14px 12px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.game-completed__title {
+  font-size: clamp(12px, 3vw, 15px);
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+.game-completed__sub {
+  font-size: clamp(11px, 2.5vw, 13px);
+  color: #666;
+  margin-top: 6px;
+}
+
+/* ── Flash ───────────────────────────────────────────────────────────────── */
+
+.game-flash {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-weight: bold;
+  border-radius: 14px;
+  letter-spacing: 3px;
+  z-index: 500;
+  animation: fadeInOut 1.5s ease;
+  pointer-events: none;
+  text-align: center;
+
+  /* No se sale de pantalla en mobile */
+  max-width: 85vw;
+  white-space: nowrap;
+}
+
+.game-flash--first {
+  font-size: clamp(20px, 5.5vw, 26px);
+  padding: 20px 36px;
+}
+
+.game-flash--late {
+  font-size: clamp(16px, 4.5vw, 20px);
+  padding: 16px 28px;
+  background: #222;
+}
+
+.game-flash__sub {
+  font-size: clamp(11px, 2.8vw, 13px);
+  margin-top: 4px;
+  opacity: 0.8;
+  letter-spacing: 2px;
+}
+
+/* ── Grid area ───────────────────────────────────────────────────────────── */
+
+.game-grid-wrap {
+  /* Padding lateral pequeño para que la grilla ocupe casi todo el ancho */
+  padding: 6px 6px;
+  position: relative;
+}
+
+.game-grid-blur {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.game-grid-blur__box {
+  text-align: center;
+  color: #fff;
+  background: #000000bb;
+  padding: 28px 32px;
+  border-radius: 14px;
+  border: 1px solid #1a1a1a;
+}
+
+.game-grid-blur__icon {
+  font-size: clamp(28px, 8vw, 40px);
+  margin-bottom: 12px;
+}
+
+.game-grid-blur__title {
+  font-size: clamp(13px, 3.5vw, 16px);
+  font-weight: bold;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+
+.game-grid-blur__sub {
+  font-size: clamp(10px, 2.5vw, 12px);
+  color: #555;
+  letter-spacing: 1px;
+}
+
+.game-grid {
+  display: grid;
+  gap: 2px;
+}
+
+.game-grid-loading {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #222;
+  font-size: clamp(11px, 2.5vw, 13px);
+  letter-spacing: 3px;
+}
+
+/* ── Word list ───────────────────────────────────────────────────────────── */
+
+.game-words {
+  /* Padding inferior extra para que el último elemento no quede bajo
+     la barra home de iPhone */
+  padding: 14px 14px calc(32px + env(safe-area-inset-bottom, 0px));
+}
+
+.game-words__title {
+  font-size: clamp(9px, 2.2vw, 11px);
+  color: #2a2a2a;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.game-words__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.game-word-chip {
+  /* Área táctil cómoda */
+  font-size: clamp(11px, 3vw, 14px);
+  padding: 7px 13px;
+  min-height: 36px;
+  border-radius: 6px;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.game-words__legend {
+  margin-top: 14px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.game-words__legend span {
+  font-size: clamp(9px, 2.2vw, 11px);
+  color: #2a2a2a;
+  letter-spacing: 1px;
+}
+
+/* ── Password dialog ─────────────────────────────────────────────────────── */
+
+.pw-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000000cc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+
+  /* Subir el dialog cuando aparece el teclado en iOS */
+  align-items: flex-start;
+  padding-top: max(20vw, 80px);
+}
+
+.pw-dialog {
+  background: #080808;
+  border: 1px solid #1e1e1e;
+  border-radius: 14px;
+  padding: 28px 22px;
+  width: min(88vw, 340px);
+  font-family: "Courier New", monospace;
+}
+
+.pw-dialog__title {
+  font-size: clamp(12px, 3vw, 14px);
+  letter-spacing: 3px;
+  margin-bottom: 18px;
+  color: #888;
+}
+
+.pw-dialog__input {
+  width: 100%;
+  background: #0f0f0f;
+  color: #fff;
+  padding: 13px 14px;
+  border-radius: 8px;
+
+  /* 16px mínimo: evita que iOS haga zoom al enfocar el campo */
+  font-size: 16px;
+
+  outline: none;
+  box-sizing: border-box;
+  margin-bottom: 4px;
+  font-family: "Courier New", monospace;
+  min-height: 48px;
+}
+
+.pw-dialog__input--normal { border: 1px solid #1e1e1e; }
+.pw-dialog__input--error  { border: 1px solid #f44336; }
+
+.pw-dialog__error {
+  font-size: clamp(10px, 2.5vw, 12px);
+  color: #f44336;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.pw-dialog__spacer { margin-bottom: 12px; }
+
+.pw-dialog__buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.pw-dialog__cancel,
+.pw-dialog__submit {
+  flex: 1;
+  padding: 13px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: clamp(12px, 3vw, 14px);
+  font-family: "Courier New", monospace;
+
+  /* Altura mínima táctil */
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pw-dialog__cancel {
+  background: #0f0f0f;
+  border: 1px solid #1e1e1e;
+  color: #555;
+}
+
+.pw-dialog__submit {
+  background: #27ae60;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* ── Animations ──────────────────────────────────────────────────────────── */
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+@keyframes fadeInOut {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+  20%  { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+  70%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.88); }
+}
