@@ -1,38 +1,33 @@
-/* ── AdminPanel ──────────────────────────────────────────────────────────── */
+/* ── AdminPanel ───────────────────────────────────────────────────── */
 
 .admin-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.93);
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 1000;
   font-family: "Courier New", monospace;
-
-  /* El panel siempre es scrolleable si el contenido no entra */
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-
   display: flex;
   align-items: flex-start;
   justify-content: center;
-
-  /* Padding con safe-area para notch y barra home */
-  padding: max(env(safe-area-inset-top), 16px) 0
-           max(env(safe-area-inset-bottom), 16px);
+  padding: max(env(safe-area-inset-top), 16px) 0 max(env(safe-area-inset-bottom), 16px);
 }
 
 .admin-panel {
-  background: #080808;
-  border: 1px solid #222;
-  border-radius: 16px;
-  padding: 28px 20px;
-  width: min(94vw, 460px);
-  color: #fff;
-
-  /* Espacio interno mínimo para que no quede pegado al borde */
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 28px 22px;
+  width: min(94vw, 480px);
+  color: var(--text);
   margin: 4px 0 16px;
+  box-shadow: 0 24px 80px #00000099;
 }
 
-/* ── Header ──────────────────────────────────────────────────────────────── */
+/* ── Header ───────────────────────────────────────────────────────── */
 
 .admin-panel__header {
   display: flex;
@@ -41,39 +36,23 @@
   margin-bottom: 24px;
 }
 
-.admin-panel__title {
-  font-size: clamp(16px, 4vw, 19px);
-  letter-spacing: 4px;
-  color: #ddd;
-  font-weight: bold;
-}
-
-.admin-panel__subtitle {
-  font-size: clamp(10px, 2.2vw, 11px);
-  color: #333;
-  letter-spacing: 2px;
-  margin-top: 3px;
-}
+.admin-panel__title    { font-size: clamp(16px, 4vw, 19px); letter-spacing: 4px; color: var(--text); font-weight: bold; }
+.admin-panel__subtitle { font-size: clamp(10px, 2.2vw, 11px); color: var(--text-muted); letter-spacing: 2px; margin-top: 3px; }
 
 .admin-panel__close {
-  background: none;
-  border: 1px solid #222;
-  color: #555;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
   border-radius: 8px;
-
-  /* Área táctil cómoda */
-  min-width: 44px;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  cursor: pointer;
-  font-size: 16px;
+  min-width: 44px; min-height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 16px;
+  transition: all 0.2s;
   -webkit-tap-highlight-color: transparent;
 }
+.admin-panel__close:hover { border-color: var(--accent); color: var(--accent); }
 
-/* ── Status box ──────────────────────────────────────────────────────────── */
+/* ── Status ───────────────────────────────────────────────────────── */
 
 .admin-status {
   border-radius: 12px;
@@ -82,184 +61,82 @@
   text-align: center;
 }
 
-.admin-status--running { background: #061506; border: 1px solid #1a3d1a; }
-.admin-status--waiting { background: #150606; border: 1px solid #3d1a1a; }
+.admin-status--running { background: #06150a; border: 1px solid #1a4d28; }
+.admin-status--waiting { background: #150608; border: 1px solid #4d1a1e; }
 
-.admin-status__label {
-  font-size: clamp(9px, 2.2vw, 10px);
-  color: #444;
-  letter-spacing: 3px;
-  margin-bottom: 10px;
-}
-
-.admin-status__indicator {
-  font-size: clamp(16px, 4.5vw, 20px);
-  font-weight: bold;
-  margin-bottom: 18px;
-}
-
-.admin-status__indicator--running { color: #4caf50; }
-.admin-status__indicator--waiting {
-  color: #f44336;
-  animation: pulse 1.5s infinite;
-}
+.admin-status__label      { font-size: clamp(9px, 2.2vw, 10px); color: var(--text-muted); letter-spacing: 3px; margin-bottom: 10px; }
+.admin-status__indicator  { font-size: clamp(16px, 4.5vw, 20px); font-weight: bold; margin-bottom: 18px; }
+.admin-status__indicator--running { color: #4ade80; }
+.admin-status__indicator--waiting { color: #f87171; animation: pulse 1.5s infinite; }
 
 .admin-status__btn {
-  border: none;
-  color: #fff;
-  padding: 16px 0;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: clamp(14px, 3.5vw, 16px);
-  font-weight: bold;
-  letter-spacing: 2px;
-  width: 100%;
-  min-height: 52px;
-  font-family: "Courier New", monospace;
-  -webkit-tap-highlight-color: transparent;
+  border: none; color: #fff; padding: 16px 0; border-radius: 10px;
+  cursor: pointer; font-size: clamp(14px, 3.5vw, 16px); font-weight: bold;
+  letter-spacing: 2px; width: 100%; min-height: 52px;
+  font-family: "Courier New", monospace; -webkit-tap-highlight-color: transparent;
+  transition: filter 0.2s;
 }
+.admin-status__btn:hover    { filter: brightness(1.12); }
+.admin-status__btn--start   { background: #16a34a; box-shadow: 0 4px 20px #16a34a44; }
+.admin-status__btn--stop    { background: #dc2626; box-shadow: 0 4px 20px #dc262644; }
 
-.admin-status__btn--start { background: #27ae60; }
-.admin-status__btn--stop  { background: #c0392b; }
-
-/* ── Shuffle button ──────────────────────────────────────────────────────── */
+/* ── Shuffle ──────────────────────────────────────────────────────── */
 
 .admin-shuffle-btn {
-  width: 100%;
-  background: #0f0f0f;
-  border: 1px solid #2a2a2a;
-  color: #888;
-  padding: 14px 0;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: clamp(12px, 3vw, 14px);
-  letter-spacing: 2px;
-  margin-bottom: 24px;
-  min-height: 52px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-
-  font-family: "Courier New", monospace;
-  -webkit-tap-highlight-color: transparent;
+  width: 100%; background: var(--bg-raised); border: 1px solid var(--border);
+  color: var(--text-dim); padding: 14px 0; border-radius: 10px; cursor: pointer;
+  font-size: clamp(12px, 3vw, 14px); letter-spacing: 2px; margin-bottom: 24px; min-height: 52px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: "Courier New", monospace; -webkit-tap-highlight-color: transparent;
+  transition: all 0.2s;
 }
+.admin-shuffle-btn:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 12px var(--accent-dim); }
 
-/* ── Section title ───────────────────────────────────────────────────────── */
+/* ── Section title ────────────────────────────────────────────────── */
 
 .admin-section-title {
   font-size: clamp(9px, 2.2vw, 11px);
-  color: #333;
+  color: var(--text-muted);
   letter-spacing: 3px;
   margin-bottom: 14px;
   text-transform: uppercase;
 }
 
-/* ── Scoreboard ──────────────────────────────────────────────────────────── */
+/* ── Scoreboard ───────────────────────────────────────────────────── */
 
-.admin-scoreboard {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 24px;
-}
+.admin-scoreboard        { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+.admin-score-row         { display: flex; align-items: center; gap: 10px; }
+.admin-score-medal       { font-size: 14px; width: 20px; text-align: right; flex-shrink: 0; }
+.admin-score-emoji       { font-size: clamp(14px, 3.5vw, 18px); flex-shrink: 0; }
+.admin-score-bar-wrap    { flex: 1; min-width: 0; }
+.admin-score-bar-label   { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.admin-score-bar-name    { font-size: clamp(10px, 2.5vw, 12px); color: var(--text-dim); letter-spacing: 1px; }
+.admin-score-bar-value   { font-size: clamp(10px, 2.5vw, 12px); }
+.admin-score-bar-track   { background: var(--bg-raised); border-radius: 3px; height: 5px; overflow: hidden; }
+.admin-score-bar-fill    { height: 100%; border-radius: 3px; transition: width 0.5s; }
 
-.admin-score-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+/* ── Word chips ───────────────────────────────────────────────────── */
 
-.admin-score-medal {
-  font-size: 14px;
-  width: 20px;
-  text-align: right;
-  flex-shrink: 0;
-}
-
-.admin-score-emoji {
-  font-size: clamp(14px, 3.5vw, 18px);
-  flex-shrink: 0;
-}
-
-.admin-score-bar-wrap {
-  flex: 1;
-  min-width: 0;
-}
-
-.admin-score-bar-label {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 4px;
-}
-
-.admin-score-bar-name  {
-  font-size: clamp(10px, 2.5vw, 12px);
-  color: #aaa;
-  letter-spacing: 1px;
-}
-
-.admin-score-bar-value {
-  font-size: clamp(10px, 2.5vw, 12px);
-}
-
-.admin-score-bar-track {
-  background: #111;
-  border-radius: 3px;
-  height: 5px;
-  overflow: hidden;
-}
-
-.admin-score-bar-fill {
-  height: 100%;
-  border-radius: 3px;
-  transition: width 0.5s;
-}
-
-/* ── Word status ─────────────────────────────────────────────────────────── */
-
-.admin-words {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 24px;
-}
+.admin-words { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
 
 .admin-word-chip {
   font-size: clamp(11px, 2.8vw, 13px);
-  padding: 6px 12px;
-  min-height: 34px;
-  border-radius: 6px;
-  letter-spacing: 1px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  padding: 6px 12px; min-height: 34px; border-radius: 6px;
+  letter-spacing: 1px; display: flex; align-items: center; gap: 5px;
 }
 
-/* ── Reset button ────────────────────────────────────────────────────────── */
+/* ── Reset ────────────────────────────────────────────────────────── */
 
 .admin-reset-btn {
-  width: 100%;
-  background: none;
-  border: 1px solid #1e1e1e;
-  color: #333;
-  padding: 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: clamp(11px, 2.8vw, 13px);
-  letter-spacing: 2px;
-  min-height: 48px;
-  font-family: "Courier New", monospace;
-  -webkit-tap-highlight-color: transparent;
+  width: 100%; background: none; border: 1px solid var(--border-dim);
+  color: var(--text-muted); padding: 14px; border-radius: 10px; cursor: pointer;
+  font-size: clamp(11px, 2.8vw, 13px); letter-spacing: 2px; min-height: 48px;
+  font-family: "Courier New", monospace; -webkit-tap-highlight-color: transparent;
+  transition: all 0.2s;
 }
+.admin-reset-btn:active, .admin-reset-btn:hover { border-color: #dc2626; color: #f87171; }
 
-.admin-reset-btn:active {
-  border-color: #c0392b;
-  color: #c0392b;
-}
-
-/* ── Animations ──────────────────────────────────────────────────────────── */
+/* ── Animaciones ──────────────────────────────────────────────────── */
 
 @keyframes pulse {
   0%, 100% { opacity: 1; }

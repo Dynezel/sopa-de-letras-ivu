@@ -1,45 +1,47 @@
-/* ── GroupSelect ─────────────────────────────────────────────────────────── */
+/* ── GroupSelect ──────────────────────────────────────────────────── */
 
 .group-select {
   min-height: 100dvh;
-  background: #080808;
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% -10%, #3b1f8822 0%, transparent 55%),
+    radial-gradient(ellipse 60% 40% at 80% 110%, #1a3b7a22 0%, transparent 55%);
   font-family: "Courier New", monospace;
   display: flex;
   flex-direction: column;
-
-  /* Evita rebotes al hacer scroll en iOS */
   -webkit-overflow-scrolling: touch;
 }
 
 .group-select__header {
-  padding: 48px 24px 28px;
+  padding: 52px 24px 28px;
   text-align: center;
 }
 
 .group-select__title {
-  /* Nunca menor a 32px en mobile */
-  font-size: clamp(32px, 10vw, 56px);
+  font-size: clamp(32px, 10vw, 58px);
   font-weight: bold;
-  letter-spacing: 6px;
+  letter-spacing: 8px;
   color: #fff;
   margin-bottom: 8px;
+  /* Efecto glow sutil en el título */
+  text-shadow: 0 0 40px #7b68ee55;
 }
 
 .group-select__subtitle {
   font-size: clamp(11px, 2.5vw, 13px);
-  color: #333;
+  color: var(--text-muted);
   letter-spacing: 4px;
   margin-bottom: 28px;
 }
 
 .group-select__prompt {
   font-size: clamp(13px, 3vw, 15px);
-  color: #666;
+  color: var(--text-dim);
   letter-spacing: 2px;
-  padding: 14px 22px;
-  background: #0f0f0f;
+  padding: 14px 24px;
+  background: var(--bg-surface);
   border-radius: 10px;
-  border: 1px solid #1a1a1a;
+  border: 1px solid var(--border-dim);
   display: inline-block;
   line-height: 1.4;
 }
@@ -49,57 +51,46 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
-  max-width: 500px;
+  max-width: 520px;
   margin: 0 auto;
   width: 100%;
 }
 
-/* ── Tarjeta de grupo ──────────────────────────────────────────────────────── */
+/* ── Tarjeta ──────────────────────────────────────────────────────── */
 
 .group-card {
-  background: #0d0d0d;
-  border: 2px solid #1a1a1a;
+  background: var(--bg-surface);
+  border: 2px solid var(--border-dim);
   border-radius: 16px;
-
-  /* Altura mínima para que sea fácil de tocar */
-  min-height: 110px;
+  min-height: 120px;
   padding: 20px 12px;
-
   cursor: pointer;
-  color: #fff;
+  color: var(--text);
   transition: all 0.18s;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 8px;
-
-  /* Quita el flash azul en Android al tocar */
   -webkit-tap-highlight-color: transparent;
 }
 
-.group-card:active {
-  transform: scale(0.97);
-  opacity: 0.85;
-}
+.group-card:active { transform: scale(0.97); opacity: 0.85; }
 
-.group-card__emoji {
-  font-size: clamp(28px, 7vw, 38px);
-  line-height: 1;
-}
+.group-card__emoji { font-size: clamp(28px, 7vw, 40px); line-height: 1; }
 
 .group-card__name {
   font-size: clamp(11px, 2.8vw, 13px);
   font-weight: bold;
   letter-spacing: 3px;
-  color: #bbb;
+  color: var(--text-dim);
   transition: color 0.18s;
 }
 
 .group-card__count {
   font-size: clamp(10px, 2.5vw, 12px);
-  color: #444;
-  background: #111;
+  color: var(--text-muted);
+  background: var(--bg-raised);
   border-radius: 10px;
   padding: 3px 10px;
   letter-spacing: 1px;

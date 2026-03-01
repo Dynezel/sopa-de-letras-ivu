@@ -1,0 +1,24 @@
+/* ═══════════════════════════════════════════════════════════════════
+   VARIABLES DE COLOR GLOBALES
+   Editá estas variables para cambiar la paleta de todo el juego
+   ═══════════════════════════════════════════════════════════════════ */
+:root {
+  --bg:          #0e0e1a;
+  --bg-surface:  #14142a;
+  --bg-raised:   #1c1c36;
+  --border:      #2e2e55;
+  --border-dim:  #1e1e38;
+  --text:        #dcdcf0;
+  --text-dim:    #5a5a90;
+  --text-muted:  #2e2e52;
+  --accent:      #7b68ee;
+  --accent-dim:  #7b68ee33;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Courier New", monospace;
+}
